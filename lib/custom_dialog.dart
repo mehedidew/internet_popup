@@ -11,11 +11,9 @@ class Alerts {
     required AlertType type,
     String? message,
     String? description,
-    String? button1,
-    String? button2,
-    bool twoButtons = false,
-    VoidCallback? onTap1,
-    VoidCallback? onTap2,
+    String? buttonString,
+    VoidCallback? onTap,
+    bool? showButton = false,
   }) {
     IconData iconData;
     String defaultMessage;
@@ -119,72 +117,30 @@ class Alerts {
                           SizedBox(
                             height: 2.7.w,
                           ),
-                          Align(
-                            alignment: Alignment.bottomRight,
-                            child: (twoButtons == false)
-                                ? ElevatedButton(
+                          (showButton == true)
+                              ? Align(
+                                  alignment: Alignment.bottomRight,
+                                  child: ElevatedButton(
                                     style: ElevatedButton.styleFrom(
                                       primary: Colors.green,
                                       side: BorderSide(color: Colors.white, width: 1.0.sp),
                                     ),
-                                    onPressed: onTap1 ??
-                                        () {
-                                          Navigator.pop(context);
-                                        },
+                                    onPressed: () {
+                                      Navigator.pop(context);
+                                    },
                                     child: Text(
-                                      button1 ?? 'Done',
+                                      buttonString ?? 'Done',
                                       style: TextStyle(
                                         fontSize: 8.5.sp,
                                         fontWeight: FontWeight.bold,
                                         color: Colors.white,
                                       ),
                                     ),
-                                  )
-                                : Row(
-                                    mainAxisAlignment: MainAxisAlignment.end,
-                                    children: [
-                                      ElevatedButton(
-                                        style: ElevatedButton.styleFrom(
-                                          primary: Colors.green,
-                                          side: BorderSide(color: Colors.white, width: 1.0.sp),
-                                        ),
-                                        onPressed: onTap1 ??
-                                            () {
-                                              Navigator.pop(context);
-                                            },
-                                        child: Text(
-                                          button1 ?? 'Yes',
-                                          style: TextStyle(
-                                            fontSize: 8.5.sp,
-                                            fontWeight: FontWeight.bold,
-                                            color: Colors.white,
-                                          ),
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        width: 2.0.w,
-                                      ),
-                                      ElevatedButton(
-                                        style: ElevatedButton.styleFrom(
-                                          primary: Colors.red,
-                                          side: BorderSide(color: Colors.white, width: 1.0.sp),
-                                        ),
-                                        onPressed: onTap2 ??
-                                            () {
-                                              Navigator.pop(context);
-                                            },
-                                        child: Text(
-                                          button2 ?? 'No',
-                                          style: TextStyle(
-                                            fontSize: 8.5.sp,
-                                            fontWeight: FontWeight.bold,
-                                            color: Colors.white,
-                                          ),
-                                        ),
-                                      )
-                                    ],
                                   ),
-                          ),
+                                )
+                              : SizedBox(
+                                  height: 2.h,
+                                ),
                         ],
                       ),
                     ),

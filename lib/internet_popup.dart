@@ -3,53 +3,53 @@ library internet_popup;
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:data_connection_checker_tv/data_connection_checker.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:internet_popup/custom_loading.dart';
+import 'package:internet_popup/custom_dialog.dart';
 
-class MyConnectivity {
-  bool isOnline = false;
-  bool isDialogOn = false;
-  // final BuildContext context;
+class InternetPopup {
+  final BuildContext context;
 
-  // MyConnectivity._internal();
-  // static final MyConnectivity _instance = MyConnectivity._internal();
-  //
-  // factory MyConnectivity() {
-  //   return _instance;
-  // }
+  bool _isOnline = false;
+  bool _isDialogOn = false;
 
-  Connectivity connectivity = Connectivity();
-  // StreamController controller = StreamController.broadcast();
+  final Connectivity _connectivity = Connectivity();
 
-  // MyConnectivity(this.context);
-  // Stream get myStream => controller.stream;
+  InternetPopup({required this.context});
 
-  void initialize({required BuildContext context}) async {
-    connectivity.onConnectivityChanged.listen((result) async {
+  void initialize({
+    String? customMessage,
+    String? customDescription,
+    bool? onTapPop,
+  }) async {
+    _connectivity.onConnectivityChanged.listen((result) async {
       if (result != ConnectivityResult.none) {
-        isOnline = await DataConnectionChecker().hasConnection;
+        _isOnline = await DataConnectionChecker().hasConnection;
       } else {
-        isOnline = false;
+        _isOnline = false;
       }
-      // controller.sink.add(isOnline);
 
-      if (isOnline == true) {
-        if (isDialogOn == true) {
-          isDialogOn = false;
+      if (_isOnline == true) {
+        if (_isDialogOn == true) {
+          _isDialogOn = false;
 
           Navigator.of(context).pop();
         }
       } else {
-        isDialogOn = true;
+        _isDialogOn = true;
 
         Alerts(context: context).customDialog(
           type: AlertType.warning,
-          message: 'No Internet Connection Found!',
-          description: 'Please enable your internet first and press OK',
-          onTap1: () {
-            if (isOnline == true) {
-              Navigator.of(context).pop();
-            }
-          },
+          message: customMessage ?? 'No Internet Connection Found!',
+          description: customDescription ?? 'Please enable your internet first and press OK',
+          showButton: onTapPop,
+          onTap: onTapPop == true
+              ? () {
+                  Navigator.of(context).pop();
+                }
+              : () {
+                  if (_isOnline == true) {
+                    Navigator.of(context).pop();
+                  }
+                },
         );
       }
     });
