@@ -7,14 +7,7 @@ class Alerts {
   final BuildContext context;
   Alerts({required this.context});
 
-  void customDialog({
-    required AlertType type,
-    String? message,
-    String? description,
-    String? buttonString,
-    VoidCallback? onTap,
-    bool? showButton = false,
-  }) {
+  void customDialog({required AlertType type, String? message, String? description, bool? showButton, VoidCallback? onTap}) {
     IconData iconData;
     String defaultMessage;
     Color color;
@@ -125,11 +118,12 @@ class Alerts {
                                       primary: Colors.green,
                                       side: BorderSide(color: Colors.white, width: 1.0.sp),
                                     ),
-                                    onPressed: () {
-                                      Navigator.pop(context);
-                                    },
+                                    onPressed: onTap ??
+                                        () {
+                                          Navigator.pop(context);
+                                        },
                                     child: Text(
-                                      buttonString ?? 'Done',
+                                      'Ok',
                                       style: TextStyle(
                                         fontSize: 8.5.sp,
                                         fontWeight: FontWeight.bold,
@@ -139,7 +133,7 @@ class Alerts {
                                   ),
                                 )
                               : SizedBox(
-                                  height: 2.h,
+                                  height: 3.h,
                                 ),
                         ],
                       ),
@@ -148,6 +142,21 @@ class Alerts {
                 ],
               ),
             ),
+          );
+        });
+  }
+
+  void showModalWithWidget({required Widget child}) {
+    showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) {
+          return Dialog(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(6.sp),
+            ),
+            backgroundColor: Colors.transparent,
+            child: child,
           );
         });
   }
