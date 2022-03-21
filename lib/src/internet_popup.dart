@@ -3,7 +3,7 @@ library internet_popup;
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:data_connection_checker_tv/data_connection_checker.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:internet_popup/custom_dialog.dart';
+import 'package:internet_popup/src/custom_dialog.dart';
 
 class InternetPopup {
   bool _isOnline = false;
@@ -52,7 +52,8 @@ class InternetPopup {
     });
   }
 
-  void initializeCustomWidget({required BuildContext context, required Widget widget}) {
+  void initializeCustomWidget(
+      {required BuildContext context, required Widget widget}) {
     _connectivity.onConnectivityChanged.listen((result) async {
       if (result != ConnectivityResult.none) {
         _isOnline = await DataConnectionChecker().hasConnection;
