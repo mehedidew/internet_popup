@@ -25,6 +25,31 @@ class InternetPopup {
     String? customDescription,
     bool? onTapPop = false,
   }) {
+    _connectivity.checkConnectivity().then((result) async {
+      if (result != ConnectivityResult.none) {
+        _isOnline = await DataConnectionChecker().hasConnection;
+      } else {
+        _isOnline = false;
+      }
+      if (_isOnline == true) {
+        if (_isDialogOn == true) {
+          _isDialogOn = false;
+          Navigator.of(context).pop();
+        }
+      } else {
+        _isDialogOn = true;
+        Alerts(context: context).customDialog(
+            type: AlertType.warning,
+            message: customMessage ?? 'No Internet Connection Found!',
+            description: customDescription ?? 'Please enable your internet',
+            showButton: onTapPop,
+            onTap: () {
+              _isDialogOn = false;
+              Navigator.of(context).pop();
+            });
+      }
+    });
+
     _connectivity.onConnectivityChanged.listen((result) async {
       if (result != ConnectivityResult.none) {
         _isOnline = await DataConnectionChecker().hasConnection;
@@ -52,8 +77,26 @@ class InternetPopup {
     });
   }
 
-  void initializeCustomWidget(
-      {required BuildContext context, required Widget widget}) {
+  void initializeCustomWidget({required BuildContext context, required Widget widget}) {
+    _connectivity.checkConnectivity().then((result) async {
+      if (result != ConnectivityResult.none) {
+        _isOnline = await DataConnectionChecker().hasConnection;
+      } else {
+        _isOnline = false;
+      }
+
+      if (_isOnline == true) {
+        if (_isDialogOn == true) {
+          _isDialogOn = false;
+          Navigator.of(context).pop();
+        }
+      } else {
+        _isDialogOn = true;
+
+        Alerts(context: context).showModalWithWidget(child: widget);
+      }
+    });
+
     _connectivity.onConnectivityChanged.listen((result) async {
       if (result != ConnectivityResult.none) {
         _isOnline = await DataConnectionChecker().hasConnection;
