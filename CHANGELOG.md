@@ -13,3 +13,7 @@
 # 1.0.3
 
 * added function to check internet on app start
+
+# 1.0.3+1
+
+*proper documentation and example

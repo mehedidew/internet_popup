@@ -46,7 +46,8 @@ class Alerts {
                 children: [
                   Positioned(
                     child: Container(
-                      width: 40.h,
+                      width: 80.w,
+                      height: 20.h,
                       padding: EdgeInsets.only(left: 1.5.h, top: 6.w, right: 1.5.h, bottom: 2.5.w),
                       margin: EdgeInsets.only(top: 5.6.w),
                       decoration: BoxDecoration(
