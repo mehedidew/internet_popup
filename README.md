@@ -19,21 +19,6 @@ A package that shows a pop up alert when the internet connection is lost
 
 
 
-## Installation
-
-In your pubspec.yaml
-
-```bash
- dependencies:
-    internet_popup: ^1.0.0
-```
-
-
-```bash
- import 'package:internet_popup/internet_popup.dart';
-```
-
-
 ## Usage
 initialize InternetPopup class and add context inside `initState()` funtion of the top of your widget tree.
 ```bash
@@ -53,4 +38,33 @@ use `onTapPop` parameter to decide if the box can be removed before internet con
 
 
 
+
+## Example
+
+```dart
+import 'package:flutter/material.dart';
+import 'package:internet_popup/internet_popup.dart';
+
+class Example extends StatefulWidget {
+  const Example({Key? key}) : super(key: key);
+
+  @override
+  _ExampleState createState() => _ExampleState();
+}
+
+class _ExampleState extends State<Example> {
+  @override
+  void initState() {
+    super.initState();
+    InternetPopup().initialize(context: context);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Container();
+  }
+}
+
+
+```
 
