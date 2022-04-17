@@ -16,4 +16,8 @@
 
 # 1.0.3+1
 
-* proper documentation
+* proper documentation and example
+
+# 1.0.4
+
+* fixed height and width of dialog box

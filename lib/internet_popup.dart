@@ -77,7 +77,8 @@ class InternetPopup {
     });
   }
 
-  void initializeCustomWidget({required BuildContext context, required Widget widget}) {
+  void initializeCustomWidget(
+      {required BuildContext context, required Widget widget}) {
     _connectivity.checkConnectivity().then((result) async {
       if (result != ConnectivityResult.none) {
         _isOnline = await DataConnectionChecker().hasConnection;

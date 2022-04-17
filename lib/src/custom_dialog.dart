@@ -8,7 +8,12 @@ class Alerts {
 
   Alerts({required this.context});
 
-  void customDialog({required AlertType type, String? message, String? description, bool? showButton, VoidCallback? onTap}) {
+  void customDialog(
+      {required AlertType type,
+      String? message,
+      String? description,
+      bool? showButton,
+      VoidCallback? onTap}) {
     IconData iconData;
     String defaultMessage;
     Color color;
@@ -46,8 +51,10 @@ class Alerts {
                 children: [
                   Positioned(
                     child: Container(
-                      width: 40.h,
-                      padding: EdgeInsets.only(left: 1.5.h, top: 6.w, right: 1.5.h, bottom: 2.5.w),
+                      width: 80.w,
+                      height: 20.h,
+                      padding: EdgeInsets.only(
+                          left: 1.5.h, top: 6.w, right: 1.5.h, bottom: 2.5.w),
                       margin: EdgeInsets.only(top: 5.6.w),
                       decoration: BoxDecoration(
                         color: Colors.white,
@@ -117,7 +124,8 @@ class Alerts {
                                   child: ElevatedButton(
                                     style: ElevatedButton.styleFrom(
                                       primary: Colors.green,
-                                      side: BorderSide(color: Colors.white, width: 1.0.sp),
+                                      side: BorderSide(
+                                          color: Colors.white, width: 1.0.sp),
                                     ),
                                     onPressed: onTap ??
                                         () {
