@@ -37,7 +37,7 @@ class Alerts {
     showDialog(
         context: context,
         barrierDismissible: false,
-        builder: (context) {
+        builder: (BuildContext context1) {
           return WillPopScope(
             onWillPop: () async {
               return false;
@@ -52,7 +52,6 @@ class Alerts {
                   Positioned(
                     child: Container(
                       width: 80.w,
-                      height: 20.h,
                       padding: EdgeInsets.only(
                           left: 1.5.h, top: 6.w, right: 1.5.h, bottom: 2.5.w),
                       margin: EdgeInsets.only(top: 5.6.w),
@@ -89,7 +88,7 @@ class Alerts {
                             style: TextStyle(
                               fontSize: 12.sp,
                               fontWeight: FontWeight.bold,
-                              color: Theme.of(context).primaryColorDark,
+                              color: Theme.of(context1).primaryColorDark,
                             ),
                           ),
                           SizedBox(
@@ -129,7 +128,7 @@ class Alerts {
                                     ),
                                     onPressed: onTap ??
                                         () {
-                                          Navigator.pop(context);
+                                          Navigator.pop(context1);
                                         },
                                     child: Text(
                                       'Ok',

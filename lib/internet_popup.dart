@@ -25,6 +25,7 @@ class InternetPopup {
     String? customDescription,
     bool? onTapPop = false,
   }) {
+    final navigator = Navigator.of(context);
     _connectivity.checkConnectivity().then((result) async {
       if (result != ConnectivityResult.none) {
         _isOnline = await DataConnectionChecker().hasConnection;
@@ -34,7 +35,7 @@ class InternetPopup {
       if (_isOnline == true) {
         if (_isDialogOn == true) {
           _isDialogOn = false;
-          Navigator.of(context).pop();
+          navigator.pop();
         }
       } else {
         _isDialogOn = true;
@@ -45,7 +46,7 @@ class InternetPopup {
             showButton: onTapPop,
             onTap: () {
               _isDialogOn = false;
-              Navigator.of(context).pop();
+              navigator.pop();
             });
       }
     });
@@ -60,7 +61,7 @@ class InternetPopup {
       if (_isOnline == true) {
         if (_isDialogOn == true) {
           _isDialogOn = false;
-          Navigator.of(context).pop();
+          navigator.pop();
         }
       } else {
         _isDialogOn = true;
@@ -71,7 +72,7 @@ class InternetPopup {
             showButton: onTapPop,
             onTap: () {
               _isDialogOn = false;
-              Navigator.of(context).pop();
+              navigator.pop();
             });
       }
     });
@@ -79,6 +80,8 @@ class InternetPopup {
 
   void initializeCustomWidget(
       {required BuildContext context, required Widget widget}) {
+    final navigator = Navigator.of(context);
+
     _connectivity.checkConnectivity().then((result) async {
       if (result != ConnectivityResult.none) {
         _isOnline = await DataConnectionChecker().hasConnection;
@@ -89,7 +92,7 @@ class InternetPopup {
       if (_isOnline == true) {
         if (_isDialogOn == true) {
           _isDialogOn = false;
-          Navigator.of(context).pop();
+          navigator.pop();
         }
       } else {
         _isDialogOn = true;
@@ -108,7 +111,7 @@ class InternetPopup {
       if (_isOnline == true) {
         if (_isDialogOn == true) {
           _isDialogOn = false;
-          Navigator.of(context).pop();
+          navigator.pop();
         }
       } else {
         _isDialogOn = true;

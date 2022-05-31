@@ -21,3 +21,11 @@
 # 1.0.4
 
 * fixed height and width of dialog box
+
+# 1.0.5
+
+* updated for flutter 3
+
+# 1.0.6
+
+* lint update
