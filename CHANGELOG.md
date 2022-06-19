@@ -29,3 +29,7 @@
 # 1.0.6
 
 * lint update
+
+# 1.0.7
+
+* new function for checking connectivity and getting boolean value

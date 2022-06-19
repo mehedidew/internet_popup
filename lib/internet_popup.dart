@@ -120,4 +120,14 @@ class InternetPopup {
       }
     });
   }
+
+  Future<bool> checkInternet() async {
+    bool isConnected = false;
+    _connectivity.checkConnectivity().then((result) async {
+      if (result != ConnectivityResult.none) {
+        isConnected = await DataConnectionChecker().hasConnection;
+      }
+    });
+    return isConnected;
+  }
 }

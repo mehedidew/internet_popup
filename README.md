@@ -36,7 +36,11 @@ You can write custom message title and description using `customMessage` and `cu
 
 use `onTapPop` parameter to decide if the box can be removed before internet connection is back online.
 
+You can use `checkInternet` function to get a Future<bool> value to check connectivity manually before some task.
 
+```bash
+ bool isConnected = await InternetPopup().checkInternet();
+```
 
 
 
