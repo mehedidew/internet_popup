@@ -33,3 +33,7 @@
 # 1.0.7
 
 * new function for checking connectivity and getting boolean value
+
+# 1.0.7+1
+
+* correction to new function
