@@ -1,7 +1,7 @@
 name: internet_popup
 description: A package for popUp message when Internet connection is off. Write one line to initialize a popUp when internet connection is turned off or connected but no internet.
 
-version: 1.0.7+1
+version: 1.0.8+1
 homepage: https://github.com/mehedidew/internet_popup
 
 environment:
@@ -16,8 +16,8 @@ dependencies:
   sizer: ^2.0.15
 
 dev_dependencies:
-  flutter_test:
-    sdk: flutter
+#  flutter_test:
+#    sdk: flutter
   test: ^1.19.2
   flutter_lints: ^2.0.1
 

@@ -19,12 +19,12 @@ class InternetPopup {
 
   InternetPopup._internal();
 
-  void initialize({
-    required BuildContext context,
-    String? customMessage,
-    String? customDescription,
-    bool? onTapPop = false,
-  }) {
+  void initialize(
+      {required BuildContext context,
+      String? customMessage,
+      String? customDescription,
+      bool? onTapPop = false,
+      Function? onChange}) {
     final navigator = Navigator.of(context);
     _connectivity.checkConnectivity().then((result) async {
       if (result != ConnectivityResult.none) {
@@ -48,6 +48,9 @@ class InternetPopup {
               _isDialogOn = false;
               navigator.pop();
             });
+      }
+      if (onChange != null) {
+        onChange(_isOnline);
       }
     });
 
@@ -129,5 +132,16 @@ class InternetPopup {
       isConnected = await DataConnectionChecker().hasConnection;
     }
     return isConnected;
+  }
+
+  Future<String> getConnectionType() async {
+    var connectivityResult = await Connectivity().checkConnectivity();
+    if (connectivityResult == ConnectivityResult.mobile) {
+      return "mobile";
+    } else if (connectivityResult == ConnectivityResult.wifi) {
+      return "wifi";
+    } else {
+      return "mobile";
+    }
   }
 }

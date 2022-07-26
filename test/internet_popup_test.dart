@@ -4,11 +4,11 @@ import 'package:test/test.dart';
 void main() {
   test('check if internet connection is there -', () async {
     //arrange
-    bool b = await InternetPopup().checkInternet();
+    String b = await InternetPopup().getConnectionType();
 
     //act
 
     //assert
-    expect(b, false);
+    expect(b, "wifi");
   });
 }

@@ -15,6 +15,7 @@ A package that shows a pop up alert when the internet connection is lost
 - auto popUp
 - option to fix or pop the warning
 - one line implementation
+- callBack function to do something after internet connectivity status change
 
 
 

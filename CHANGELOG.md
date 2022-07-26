@@ -37,3 +37,7 @@
 # 1.0.7+1
 
 * correction to new function
+
+# 1.0.8+1
+
+* added nullable callback function to initialize method
