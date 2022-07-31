@@ -45,3 +45,8 @@
 # 1.0.8+2
 
 * fixed width issue
+
+
+# 1.0.8+3
+
+* version conflict issue
