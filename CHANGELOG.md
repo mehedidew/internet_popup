@@ -41,3 +41,7 @@
 # 1.0.8+1
 
 * added nullable callback function to initialize method
+
+# 1.0.8+2
+
+* fixed width issue

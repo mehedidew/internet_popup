@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:sizer/sizer.dart';
 
 enum AlertType { success, info, error, warning }
 
 class Alerts {
   final BuildContext context;
+  double h;
+  double w;
 
-  Alerts({required this.context});
+  Alerts({required this.context})
+      : h = MediaQuery.of(context).size.height,
+        w = MediaQuery.of(context).size.width;
 
   void customDialog(
       {required AlertType type,
@@ -44,27 +47,30 @@ class Alerts {
             },
             child: Dialog(
               shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(4.sp),
+                borderRadius: BorderRadius.circular(5),
               ),
               backgroundColor: Colors.transparent,
               child: Stack(
                 children: [
                   Positioned(
                     child: Container(
-                      width: 80.w,
+                      width: w * 0.8,
                       padding: EdgeInsets.only(
-                          left: 1.5.h, top: 6.w, right: 1.5.h, bottom: 2.5.w),
-                      margin: EdgeInsets.only(top: 5.6.w),
+                          left: w * .015,
+                          top: h * .03,
+                          right: w * .015,
+                          bottom: h * .01),
+                      margin: EdgeInsets.only(top: h * .05),
                       decoration: BoxDecoration(
                         color: Colors.white,
-                        borderRadius: BorderRadius.circular(15.sp),
-                        border: Border.all(color: Colors.white, width: 1.5.sp),
+                        borderRadius: BorderRadius.circular(15),
+                        border: Border.all(color: Colors.white, width: 1.5),
                         // shape: BoxShape.rectangle,
-                        boxShadow: [
+                        boxShadow: const [
                           BoxShadow(
                             color: Colors.black,
-                            offset: const Offset(0, 10),
-                            blurRadius: 20.sp,
+                            offset: Offset(0, 10),
+                            blurRadius: 40,
                           )
                         ],
                       ),
@@ -76,23 +82,23 @@ class Alerts {
                             child: Icon(
                               iconData,
                               color: color,
-                              size: 25.sp,
+                              size: 45,
                             ),
                           ),
                           SizedBox(
-                            height: 2.w,
+                            height: h * .02,
                           ),
                           Text(
                             message ?? defaultMessage,
                             textAlign: TextAlign.center,
                             style: TextStyle(
-                              fontSize: 12.sp,
+                              fontSize: 16,
                               fontWeight: FontWeight.bold,
                               color: Theme.of(context1).primaryColorDark,
                             ),
                           ),
                           SizedBox(
-                            height: 2.0.w,
+                            height: h * .02,
                           ),
                           (description == null)
                               ? const SizedBox()
@@ -103,8 +109,8 @@ class Alerts {
                                       Center(
                                         child: Text(
                                           description,
-                                          style: TextStyle(
-                                            fontSize: 10.0.sp,
+                                          style: const TextStyle(
+                                            fontSize: 14,
                                             color: Colors.black,
                                             fontWeight: FontWeight.w400,
                                           ),
@@ -115,7 +121,7 @@ class Alerts {
                                   ),
                                 ),
                           SizedBox(
-                            height: 2.7.w,
+                            height: h * .02,
                           ),
                           (showButton == true)
                               ? Align(
@@ -123,17 +129,17 @@ class Alerts {
                                   child: ElevatedButton(
                                     style: ElevatedButton.styleFrom(
                                       primary: Colors.green,
-                                      side: BorderSide(
-                                          color: Colors.white, width: 1.0.sp),
+                                      side: const BorderSide(
+                                          color: Colors.white, width: 1.0),
                                     ),
                                     onPressed: onTap ??
                                         () {
                                           Navigator.pop(context1);
                                         },
-                                    child: Text(
+                                    child: const Text(
                                       'Ok',
                                       style: TextStyle(
-                                        fontSize: 8.5.sp,
+                                        fontSize: 10,
                                         fontWeight: FontWeight.bold,
                                         color: Colors.white,
                                       ),
@@ -141,7 +147,7 @@ class Alerts {
                                   ),
                                 )
                               : SizedBox(
-                                  height: 3.h,
+                                  height: h * .03,
                                 ),
                         ],
                       ),
@@ -161,7 +167,7 @@ class Alerts {
         builder: (BuildContext context) {
           return Dialog(
             shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(6.sp),
+              borderRadius: BorderRadius.circular(6),
             ),
             backgroundColor: Colors.transparent,
             child: child,

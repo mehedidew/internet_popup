@@ -78,6 +78,9 @@ class InternetPopup {
               navigator.pop();
             });
       }
+      if (onChange != null) {
+        onChange(_isOnline);
+      }
     });
   }
 
