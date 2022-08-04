@@ -50,3 +50,7 @@
 # 1.0.8+3
 
 * version conflict issue
+
+# 1.0.8+4
+
+* minor correction

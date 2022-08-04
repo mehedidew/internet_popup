@@ -49,9 +49,6 @@ class InternetPopup {
               navigator.pop();
             });
       }
-      if (onChange != null) {
-        onChange(_isOnline);
-      }
     });
 
     _connectivity.onConnectivityChanged.listen((result) async {

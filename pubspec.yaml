@@ -1,7 +1,7 @@
 name: internet_popup
 description: A package for popUp message when Internet connection is off. Write one line to initialize a popUp when internet connection is turned off or connected but no internet.
 
-version: 1.0.8+3
+version: 1.0.8+4
 homepage: https://github.com/mehedidew/internet_popup
 
 environment:
