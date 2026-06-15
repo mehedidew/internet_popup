@@ -11,12 +11,7 @@ class Alerts {
       : h = MediaQuery.of(context).size.height,
         w = MediaQuery.of(context).size.width;
 
-  void customDialog(
-      {required AlertType type,
-      String? message,
-      String? description,
-      bool? showButton,
-      VoidCallback? onTap}) {
+  void customDialog({required AlertType type, String? message, String? description, bool? showButton, VoidCallback? onTap, Function(BuildContext)? onBuild}) {
     IconData iconData;
     String defaultMessage;
     Color color;
@@ -41,10 +36,11 @@ class Alerts {
         context: context,
         barrierDismissible: false,
         builder: (BuildContext context1) {
-          return WillPopScope(
-            onWillPop: () async {
-              return false;
-            },
+          if (onBuild != null) {
+            onBuild(context1);
+          }
+          return PopScope(
+            canPop: false,
             child: Dialog(
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(5),
@@ -55,11 +51,7 @@ class Alerts {
                   Positioned(
                     child: Container(
                       width: w * 0.8,
-                      padding: EdgeInsets.only(
-                          left: w * .015,
-                          top: h * .03,
-                          right: w * .015,
-                          bottom: h * .01),
+                      padding: EdgeInsets.only(left: w * .015, top: h * .03, right: w * .015, bottom: h * .01),
                       margin: EdgeInsets.only(top: h * .05),
                       decoration: BoxDecoration(
                         color: Colors.white,
@@ -128,9 +120,8 @@ class Alerts {
                                   alignment: Alignment.bottomRight,
                                   child: ElevatedButton(
                                     style: ElevatedButton.styleFrom(
-                                      primary: Colors.green,
-                                      side: const BorderSide(
-                                          color: Colors.white, width: 1.0),
+                                      backgroundColor: Colors.green,
+                                      side: const BorderSide(color: Colors.white, width: 1.0),
                                     ),
                                     onPressed: onTap ??
                                         () {
@@ -160,11 +151,14 @@ class Alerts {
         });
   }
 
-  void showModalWithWidget({required Widget child}) {
+  void showModalWithWidget({required Widget child, Function(BuildContext)? onBuild}) {
     showDialog(
         context: context,
         barrierDismissible: false,
         builder: (BuildContext context) {
+          if (onBuild != null) {
+            onBuild(context);
+          }
           return Dialog(
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(6),
