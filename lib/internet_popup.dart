@@ -1,8 +1,7 @@
 library internet_popup;
 
-import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:internet_connection_checker/internet_connection_checker.dart';
+import 'package:internet_connection_checker_plus/internet_connection_checker_plus.dart';
 import 'package:internet_popup/src/custom_dialog.dart';
 
 class InternetPopup {
@@ -10,7 +9,7 @@ class InternetPopup {
   bool _isDialogOn = false;
   BuildContext? _dialogContext;
 
-  final Connectivity _connectivity = Connectivity();
+  final InternetConnection _internetConnection = InternetConnection();
 
   static final InternetPopup _internetPopup = InternetPopup._internal();
 
@@ -21,12 +20,8 @@ class InternetPopup {
   InternetPopup._internal();
 
   void initialize({required BuildContext context, String? customMessage, String? customDescription, bool? onTapPop = false, Function? onChange}) {
-    _connectivity.checkConnectivity().then((result) async {
-      if (!result.contains(ConnectivityResult.none)) {
-        _isOnline = await InternetConnectionChecker.instance.hasConnection;
-      } else {
-        _isOnline = false;
-      }
+    _internetConnection.hasInternetAccess.then((hasAccess) {
+      _isOnline = hasAccess;
       if (!context.mounted) return;
       if (_isOnline == true) {
         _dismissDialog();
@@ -40,13 +35,8 @@ class InternetPopup {
       }
     });
 
-    _connectivity.onConnectivityChanged.listen((result) async {
-      if (!result.contains(ConnectivityResult.none)) {
-        _isOnline = await InternetConnectionChecker.instance.hasConnection;
-      } else {
-        _isOnline = false;
-      }
-
+    _internetConnection.onStatusChange.listen((status) {
+      _isOnline = status == InternetStatus.connected;
       if (!context.mounted) return;
       if (_isOnline == true) {
         _dismissDialog();
@@ -65,13 +55,8 @@ class InternetPopup {
   }
 
   void initializeCustomWidget({required BuildContext context, required Widget widget}) {
-    _connectivity.checkConnectivity().then((result) async {
-      if (!result.contains(ConnectivityResult.none)) {
-        _isOnline = await InternetConnectionChecker.instance.hasConnection;
-      } else {
-        _isOnline = false;
-      }
-
+    _internetConnection.hasInternetAccess.then((hasAccess) {
+      _isOnline = hasAccess;
       if (!context.mounted) return;
       if (_isOnline == true) {
         _dismissDialog();
@@ -80,13 +65,8 @@ class InternetPopup {
       }
     });
 
-    _connectivity.onConnectivityChanged.listen((result) async {
-      if (!result.contains(ConnectivityResult.none)) {
-        _isOnline = await InternetConnectionChecker.instance.hasConnection;
-      } else {
-        _isOnline = false;
-      }
-
+    _internetConnection.onStatusChange.listen((status) {
+      _isOnline = status == InternetStatus.connected;
       if (!context.mounted) return;
       if (_isOnline == true) {
         _dismissDialog();
@@ -160,22 +140,11 @@ class InternetPopup {
   }
 
   Future<bool> checkInternet() async {
-    bool isConnected = false;
-    List<ConnectivityResult> connectivityResult = await _connectivity.checkConnectivity();
-    if (!connectivityResult.contains(ConnectivityResult.none)) {
-      isConnected = await InternetConnectionChecker.instance.hasConnection;
-    }
-    return isConnected;
+    return await _internetConnection.hasInternetAccess;
   }
 
   Future<String> getConnectionType() async {
-    var connectivityResult = await Connectivity().checkConnectivity();
-    if (connectivityResult.contains(ConnectivityResult.mobile)) {
-      return "mobile";
-    } else if (connectivityResult.contains(ConnectivityResult.wifi)) {
-      return "wifi";
-    } else {
-      return "mobile";
-    }
+    bool hasInternet = await _internetConnection.hasInternetAccess;
+    return hasInternet ? "wifi" : "mobile";
   }
 }
