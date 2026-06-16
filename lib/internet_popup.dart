@@ -9,7 +9,7 @@ class InternetPopup {
   bool _isDialogOn = false;
   BuildContext? _dialogContext;
 
-  final InternetConnection _internetConnection = InternetConnection();
+  final InternetConnection _internetConnection = InternetConnection.createInstance();
 
   static final InternetPopup _internetPopup = InternetPopup._internal();
 

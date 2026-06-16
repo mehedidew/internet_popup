@@ -58,3 +58,8 @@
 # 1.0.8+5
 
 * flutter 3
+
+# 2.0.0
+
+* change from internet_connection_checker to internet_connection_checker_plus
+* update internet connection check method
