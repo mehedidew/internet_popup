@@ -12,7 +12,7 @@ dependencies:
   flutter:
     sdk: flutter
 
-  internet_connection_checker_plus: ^3.1.0
+  internet_connection_checker_plus: ^3.1.1
 
 
 dev_dependencies:
