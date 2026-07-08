@@ -63,3 +63,7 @@
 
 * change from internet_connection_checker to internet_connection_checker_plus
 * update internet connection check method
+
+# 2.0.1
+
+* Custom message and Custom description field can be changed if initialized again

@@ -1,37 +1,61 @@
+/// A lightweight package that shows a popup dialog when the device
+/// loses internet connectivity, and automatically dismisses it once
+/// the connection is restored.
 library internet_popup;
 
 import 'package:flutter/cupertino.dart';
 import 'package:internet_connection_checker_plus/internet_connection_checker_plus.dart';
 import 'package:internet_popup/src/custom_dialog.dart';
 
+/// Singleton controller that monitors internet connectivity and shows
+/// a warning dialog whenever the device is offline.
+///
+/// Call [initialize] once (typically from the `initState` of your
+/// app's root widget) to start listening for connectivity changes.
 class InternetPopup {
   bool _isOnline = false;
   bool _isDialogOn = false;
   BuildContext? _dialogContext;
+  String? customMessage;
+  String? customDescription;
+  bool? onTapPop = false;
+  Function? onChange;
 
   final InternetConnection _internetConnection = InternetConnection.createInstance();
 
   static final InternetPopup _internetPopup = InternetPopup._internal();
 
+  /// Returns the single shared [InternetPopup] instance.
   factory InternetPopup() {
     return _internetPopup;
   }
 
   InternetPopup._internal();
 
+  /// Starts monitoring connectivity and shows a built-in warning dialog
+  /// whenever the device has no internet access.
+  ///
+  /// - [context] is used to display the dialog and must belong to a
+  ///   widget high enough in the tree to remain mounted for the app's
+  ///   lifetime.
+  /// - [customMessage] overrides the default dialog title.
+  /// - [customDescription] overrides the default dialog body text.
+  /// - [onTapPop] controls whether a dismiss button is shown.
+  /// - [onChange] is called with the new connectivity state (`true`
+  ///   when online) whenever it changes.
   void initialize({required BuildContext context, String? customMessage, String? customDescription, bool? onTapPop = false, Function? onChange}) {
     _internetConnection.hasInternetAccess.then((hasAccess) {
       _isOnline = hasAccess;
       if (!context.mounted) return;
+      this.customMessage = customMessage;
+      this.customDescription = customDescription;
+      this.onTapPop = onTapPop;
+      this.onChange = onChange;
+
       if (_isOnline == true) {
         _dismissDialog();
       } else {
-        _showDialog(
-          context: context,
-          customMessage: customMessage,
-          customDescription: customDescription,
-          onTapPop: onTapPop,
-        );
+        _showDialog(context: context);
       }
     });
 
@@ -41,12 +65,7 @@ class InternetPopup {
       if (_isOnline == true) {
         _dismissDialog();
       } else {
-        _showDialog(
-          context: context,
-          customMessage: customMessage,
-          customDescription: customDescription,
-          onTapPop: onTapPop,
-        );
+        _showDialog(context: context);
       }
       if (onChange != null) {
         onChange(_isOnline);
@@ -54,6 +73,8 @@ class InternetPopup {
     });
   }
 
+  /// Same as [initialize], but displays your own [widget] instead of
+  /// the built-in dialog when the device is offline.
   void initializeCustomWidget({required BuildContext context, required Widget widget}) {
     _internetConnection.hasInternetAccess.then((hasAccess) {
       _isOnline = hasAccess;
@@ -78,9 +99,6 @@ class InternetPopup {
 
   void _showDialog({
     required BuildContext context,
-    String? customMessage,
-    String? customDescription,
-    bool? onTapPop,
   }) {
     if (_isDialogOn) return;
     _isDialogOn = true;
@@ -139,10 +157,15 @@ class InternetPopup {
     }
   }
 
+  /// Returns `true` if the device currently has internet access.
   Future<bool> checkInternet() async {
     return await _internetConnection.hasInternetAccess;
   }
 
+  /// Returns a rough description of the current connection type:
+  /// `"wifi"` if online, `"mobile"` otherwise.
+  ///
+  /// Note: this is a coarse heuristic, not an actual network-type check.
   Future<String> getConnectionType() async {
     bool hasInternet = await _internetConnection.hasInternetAccess;
     return hasInternet ? "wifi" : "mobile";

@@ -2,7 +2,8 @@
 # internet_popup
 
 A package that shows a pop up alert when the internet connection is lost
-[![MIT License](https://img.shields.io/apm/l/atomic-design-ui.svg?)](https://github.com/tterb/atomic-design-ui/blob/master/LICENSEs)
+
+[![GitHub License](https://img.shields.io/github/license/gjwgit/markdown_tooltip)](https://raw.githubusercontent.com/gjwgit/markdown_tooltip/dev/LICENSE)
 
 
 
