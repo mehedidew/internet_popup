@@ -3,6 +3,8 @@
 /// the connection is restored.
 library internet_popup;
 
+import 'dart:async';
+
 import 'package:flutter/cupertino.dart';
 import 'package:internet_connection_checker_plus/internet_connection_checker_plus.dart';
 import 'package:internet_popup/src/custom_dialog.dart';
@@ -20,6 +22,7 @@ class InternetPopup {
   String? customDescription;
   bool? onTapPop = false;
   Function? onChange;
+  Timer? _debounce;
 
   final InternetConnection _internetConnection = InternetConnection.createInstance();
 
@@ -62,10 +65,17 @@ class InternetPopup {
     _internetConnection.onStatusChange.listen((status) {
       _isOnline = status == InternetStatus.connected;
       if (!context.mounted) return;
+
+      _debounce?.cancel();
       if (_isOnline == true) {
         _dismissDialog();
       } else {
-        _showDialog(context: context);
+        _debounce = Timer(const Duration(seconds: 2), () async {
+          final stillOffline = !(await _internetConnection.hasInternetAccess);
+          if (stillOffline && context.mounted) {
+            _showDialog(context: context);
+          }
+        });
       }
       if (onChange != null) {
         onChange(_isOnline);
@@ -89,10 +99,17 @@ class InternetPopup {
     _internetConnection.onStatusChange.listen((status) {
       _isOnline = status == InternetStatus.connected;
       if (!context.mounted) return;
+
+      _debounce?.cancel();
       if (_isOnline == true) {
         _dismissDialog();
       } else {
-        _showCustomDialog(context: context, widget: widget);
+        _debounce = Timer(const Duration(seconds: 2), () async {
+          final stillOffline = !(await _internetConnection.hasInternetAccess);
+          if (stillOffline && context.mounted) {
+            _showCustomDialog(context: context, widget: widget);
+          }
+        });
       }
     });
   }

@@ -67,3 +67,7 @@
 # 2.0.1
 
 * Custom message and Custom description field can be changed if initialized again
+
+# 2.0.2
+
+* Fixed dialog flashing on app resume when a transient connectivity check fails; now debounces and re-verifies before showing the dialog
